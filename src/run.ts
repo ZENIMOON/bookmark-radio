@@ -91,15 +91,15 @@ async function processDate(date: string): Promise<void> {
 }
 
 async function main() {
-  if (!process.env.OPENAI_API_KEY) {
-    console.error("OPENAI_API_KEY が設定されていません。");
-    process.exit(1);
-  }
   const dates = pendingDates();
   if (dates.length === 0) {
     console.log("未処理の inbox はありません。");
     rebuildIndex();
     return;
+  }
+  if (!process.env.OPENAI_API_KEY) {
+    console.error("OPENAI_API_KEY が設定されていません。");
+    process.exit(1);
   }
   for (const date of dates) {
     await processDate(date);
