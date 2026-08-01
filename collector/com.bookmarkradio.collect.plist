@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.bookmarkradio.collect</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/zsh</string>
+    <string>-lc</string>
+    <string>cd __REPO_DIR__ &amp;&amp; npm run collect >> ~/.bookmark-radio/collect.log 2>&amp;1</string>
+  </array>
+
+  <!-- 毎朝 8:00 JST に実行。Mac がスリープ中だった場合は次回起動時に実行される -->
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Hour</key>
+    <integer>8</integer>
+    <key>Minute</key>
+    <integer>0</integer>
+  </dict>
+
+  <key>RunAtLoad</key>
+  <false/>
+</dict>
+</plist>

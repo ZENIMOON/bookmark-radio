@@ -1,0 +1,27 @@
+{
+  "name": "bookmark-radio",
+  "version": "0.1.0",
+  "private": true,
+  "description": "X bookmarks → daily Japanese audio radio digest, published on GitHub Pages",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "collect": "tsx collector/collect.ts",
+    "pipeline": "tsx src/run.ts",
+    "build-site": "tsx src/build-site.ts",
+    "typecheck": "tsc --noEmit",
+    "serve": "npx serve public"
+  },
+  "dependencies": {
+    "esbuild": "^0.24.0",
+    "openai": "^4.77.0",
+    "playwright": "^1.49.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.0"
+  }
+}

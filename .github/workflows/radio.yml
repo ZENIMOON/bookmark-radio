@@ -1,0 +1,73 @@
+name: Build radio & deploy
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "data/inbox/**"
+  schedule:
+    # 毎日 10:30 JST (01:30 UTC) — collector の push を取りこぼした場合の保険
+    - cron: "30 1 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: radio
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Run pipeline (analyze + script + TTS)
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: ${{ vars.OPENAI_MODEL }}
+          TTS_MODEL: ${{ vars.TTS_MODEL }}
+          TTS_VOICE: ${{ vars.TTS_VOICE }}
+        run: npm run pipeline
+
+      - name: Commit generated episodes
+        run: |
+          git config user.name "bookmark-radio-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/episodes data/index.json
+          if git diff --cached --quiet; then
+            echo "No new episodes."
+          else
+            git commit -m "Add radio episode(s) [skip ci]"
+            git pull --rebase origin main
+            git push
+          fi
+
+      - name: Build site
+        run: npm run build-site
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

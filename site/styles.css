@@ -1,0 +1,163 @@
+:root {
+  --bg: #0f1115;
+  --bg-card: #181b22;
+  --bg-card-2: #1e222b;
+  --text: #e8eaf0;
+  --text-dim: #9aa1af;
+  --accent: #ff8a3d;
+  --accent-soft: rgba(255, 138, 61, 0.14);
+  --border: #2a2f3a;
+  --radius: 14px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Hiragino Sans", "Noto Sans JP", system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+}
+
+.site-header {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 40px 20px 8px;
+}
+.site-header h1 { margin: 0; font-size: 1.8rem; letter-spacing: 0.02em; }
+.tagline { color: var(--text-dim); margin: 6px 0 18px; }
+
+#search {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text);
+  font-size: 1rem;
+  outline: none;
+}
+#search:focus { border-color: var(--accent); }
+
+main {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 20px 20px 80px;
+}
+
+.loading, .empty { color: var(--text-dim); text-align: center; padding: 60px 0; }
+
+/* --- 今日のエピソード (ヒーロー) --- */
+.hero {
+  background: linear-gradient(135deg, var(--bg-card-2), var(--bg-card));
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 28px;
+}
+.hero .date { color: var(--accent); font-weight: 600; font-size: 0.9rem; }
+.hero h2 { margin: 4px 0 12px; font-size: 1.4rem; }
+.hero audio { width: 100%; margin-top: 8px; }
+.hero .meta { color: var(--text-dim); font-size: 0.85rem; margin-top: 8px; }
+.no-audio { color: var(--text-dim); font-size: 0.9rem; }
+
+/* --- トピックカード --- */
+.topic {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  margin-bottom: 16px;
+}
+.topic-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+.topic h3 { margin: 0; font-size: 1.1rem; flex: 1 1 100%; }
+.chip {
+  display: inline-block;
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-radius: 999px;
+  padding: 2px 12px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+.stars { color: var(--accent); letter-spacing: 2px; font-size: 0.85rem; }
+.stars .off { color: var(--border); }
+
+.topic ul.summary { margin: 8px 0; padding-left: 1.2em; }
+.topic .section { margin-top: 10px; }
+.topic .label {
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 700;
+  display: block;
+}
+.topic .section p { margin: 2px 0 0; color: var(--text); font-size: 0.95rem; }
+.topic .comment {
+  border-left: 3px solid var(--accent);
+  padding-left: 12px;
+  color: var(--text-dim);
+  font-style: italic;
+  margin-top: 12px;
+}
+.topic .links { margin-top: 12px; font-size: 0.85rem; }
+.topic .links a { color: var(--text-dim); text-decoration: none; margin-right: 14px; }
+.topic .links a:hover { color: var(--accent); }
+
+/* --- 今日試すこと --- */
+.actions {
+  background: var(--accent-soft);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 18px 22px;
+  margin: 24px 0;
+}
+.actions h3 { margin: 0 0 8px; color: var(--accent); font-size: 1rem; }
+.actions ol { margin: 0; padding-left: 1.4em; }
+
+/* --- アーカイブ --- */
+.archive h2 { font-size: 1.1rem; margin: 40px 0 12px; color: var(--text-dim); }
+.archive-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 8px;
+  background: var(--bg-card);
+  cursor: pointer;
+}
+.archive-item:hover { border-color: var(--accent); }
+.archive-item .d { color: var(--accent); font-size: 0.85rem; white-space: nowrap; }
+.archive-item .t { flex: 1; }
+.archive-item .n { color: var(--text-dim); font-size: 0.8rem; white-space: nowrap; }
+
+.back {
+  background: none; border: 1px solid var(--border); color: var(--text-dim);
+  border-radius: 999px; padding: 6px 16px; cursor: pointer; margin-bottom: 16px;
+  font-size: 0.9rem;
+}
+.back:hover { color: var(--accent); border-color: var(--accent); }
+
+.search-hit-episode { color: var(--text-dim); font-size: 0.8rem; }
+
+.site-footer {
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 0.8rem;
+  padding: 20px;
+  border-top: 1px solid var(--border);
+}
+
+@media (max-width: 600px) {
+  .site-header { padding-top: 24px; }
+  .topic { padding: 16px; }
+}
