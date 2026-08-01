@@ -54,6 +54,7 @@ function rebuildIndex(): void {
     }
   }
   const index: SiteIndex = { updatedAt: new Date().toISOString(), episodes };
+  fs.mkdirSync(path.dirname(INDEX_FILE), { recursive: true });
   fs.writeFileSync(INDEX_FILE, JSON.stringify(index, null, 2));
   console.log(`index.json 更新 (${episodes.length} エピソード)`);
 }
