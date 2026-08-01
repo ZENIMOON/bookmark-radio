@@ -53,6 +53,14 @@ function rebuildIndex(): void {
       });
     }
   }
+  // エピソード内容が変わらない限り書き換えない (updatedAt だけの空コミットを防ぐ)
+  if (fs.existsSync(INDEX_FILE)) {
+    const prev: SiteIndex = JSON.parse(fs.readFileSync(INDEX_FILE, "utf8"));
+    if (JSON.stringify(prev.episodes) === JSON.stringify(episodes)) {
+      console.log("index.json は最新です");
+      return;
+    }
+  }
   const index: SiteIndex = { updatedAt: new Date().toISOString(), episodes };
   fs.mkdirSync(path.dirname(INDEX_FILE), { recursive: true });
   fs.writeFileSync(INDEX_FILE, JSON.stringify(index, null, 2));
